@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-#from pdf2image import convert_from_path
 import re
 import subprocess
 
@@ -133,10 +132,6 @@ def generatePNG(file_name, clean_logs=True, clean_pdfs=True, verbose=True):
     if verbose:
         args_list.append("--verbose")
     crop = subprocess.run(args_list)
-    
-    '''# Convert to png
-    img = convert_from_path(file_name+"-crop.pdf")
-    img.save(file_name+".png", "PNG")'''
 
     # Convert to png
     args_list = ["pdftoppm", "-png", file_name+"-crop.pdf", file_name]
