@@ -1,21 +1,21 @@
 from pathlib import Path
 import re
 
-import compileConvert
+import compile_convert
 
-def validFileName(fileName):
+def valid_file_name(file_name):
     """Confirms that a file name is valid.
 
     Args:
-        fileName (str): potential name for .tex file (extension optional).
+        file_name (str): potential name for .tex file (extension optional).
     Returns:
         a str of alphanumeric/underscore characters (without extension).
     Raises:
         Exception: if the file name is invalid.
     """
     # Must have 1+ alphanumeric/underscore characters; may end in .tex
-    nameRegex = re.compile(r"^(\w+)(\.tex)?$")
-    mo = nameRegex.search(fileName)
+    name_regex = re.compile(r"^(\w+)(\.tex)?$")
+    mo = name_regex.search(file_name)
 
     # Return file name (without .tex extension) or raise exception
     if mo:
@@ -23,30 +23,30 @@ def validFileName(fileName):
     else:
         raise Exception("Invalid file name. Be sure the extension is .tex.")
 
-def dirExists():
+def dir_exists():
     """Confirm the program directory exists or create it.
 
     Returns:
         pathlib.PosixPath object (equiv. to str) representing program directory.
     """
-    myPath = Path.home()/"Documents"/"texdir"
-    if not myPath.exists():
-        myPath.mkdir()
-    return myPath
+    my_path = Path.home()/"Documents"/"texdir"
+    if not my_path.exists():
+        my_path.mkdir()
+    return my_path
 
-def fileExists(fileName):
-    """Checks if fileName.tex exists in texdir.
+def file_exists(file_name):
+    """Checks if file_name.tex exists in texdir.
 
     Args:
-        fileName (str): name of file to look for (no extension).
+        file_name (str): name of file to look for (no extension).
     Returns:
         False: if a file of that name does not exist.
         True: if a file of that name exists.
     """
-    fileName = fileName + ".tex"
-    ls = compileConvert.texDirContents()
+    file_name = file_name + ".tex"
+    ls = compile_convert.tex_dir_contents()
     try:
-        ls.index(fileName)
+        ls.index(file_name)
     except ValueError:
         # File does not exist so it's not in ls
         return False
@@ -54,16 +54,16 @@ def fileExists(fileName):
         # File exists so it appears in ls
         return True
 
-def readFile(filePath):
+def read_file(file_path):
     """Parse existing file to locate past user input.
 
     Args:
-        fileName (pathlib.PosixPath object): .tex file and its full path.
+        file_path (pathlib.PosixPath object): .tex file and its full path.
     Returns:
         str of the text in the file.
     """
     contents = ""
-    with open(filePath, "r") as f:
+    with open(file_path, "r") as f:
         lines = f.readlines()
         for line in lines:
             contents += line

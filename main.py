@@ -1,9 +1,9 @@
 import argparse
 import textwrap
 
-import compileConvert
+import compile_convert
 import fileIO
-import guiStuff
+import gui_stuff
 from _version import __version__
 
 def main():
@@ -21,7 +21,7 @@ def main():
             """))
     # Implement later
     '''parser.add_argument(
-        "-ng", "--nogui",
+        "-ng", "--no-gui",
         action="store_true", default=False,
         help="use the program without launching the GUI text editor"
         )
@@ -47,7 +47,7 @@ def main():
         help="increase output verbosity in the shell"
         )
     parser.add_argument(
-        "fileName",
+        "file_name",
         help="name of the file to create or edit (no extension)"
         )
     args = parser.parse_args()
@@ -57,16 +57,16 @@ def main():
     if args.verbose:
         VERBOSE = True
 
-    # Confirm fileName is valid
-    fileName = fileIO.validFileName(args.fileName)
+    # Confirm file_name is valid
+    file_name = fileIO.valid_file_name(args.file_name)
     
     # Is file new or existing?
-    if fileIO.fileExists(fileName):
+    if fileIO.file_exists(file_name):
         # Edit existing file
-        guiStuff.initWin(fileName, VERBOSE, new=False)
+        gui_stuff.init_win(file_name, VERBOSE, new=False)
     else:
         # Create new file
-        guiStuff.initWin(fileName, VERBOSE, new=True)
+        gui_stuff.init_win(file_name, VERBOSE, new=True)
 
 if __name__ == "__main__":
     main()
