@@ -12,14 +12,12 @@ def main():
         prog="LaTeX PNG Creator Beta",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=textwrap.dedent("""\
-            This program requires Python 3.5+ to run.
-            It also requires latexmk, which can be installed with:
-                sudo apt install latexmk
-            and texlive-latex-extra, which can be installed with:
-                sudo apt-get install texlive-latex-extra
-            which adds the standalone class.
-                texlive-extra-utils
-                sudo apt-get install python3-tk
+            A WIP tool to convert LaTeX equations to PNGs.
+            While the setup script contains the bare minimum for basic functionality,
+            if you want to do more with LaTeX you may need to install other packages.
+            You might want to check out the TeX Users Group (tug.org). For a list of
+            new packages to install to extend the functionality of this tool, try
+                apt search texlive | grep -v "installed"
             """))
     # Implement later
     '''parser.add_argument(
