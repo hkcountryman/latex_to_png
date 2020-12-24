@@ -1,19 +1,18 @@
 import os
 from pathlib import Path
 import re
-from shutil import copyfile
 import subprocess
 
-import fileIO
+import file_IO
 
-def texDirContents():
+def tex_dir_contents():
     """Runs ls in the shell to assemble a list of files in texDir.
 
     Returns:
         a list of all file names in texDir.
     """
     # Navigate to texDir
-    os.chdir(os.path.abspath(fileIO.dirExists()))
+    os.chdir(os.path.abspath(file_IO.dir_exists()))
 
     # Assemble and format ls output in a list
     ls = subprocess.Popen(["ls"], stdout=subprocess.PIPE, universal_newlines=True)
@@ -25,10 +24,10 @@ def texDirContents():
         i += 1
     return out
 
-def garbageFiles(fileName, ls, comp=True):
+def garbage_files(file_name, ls, comp=True):
     """Identifies files to remove.
     Args:
-        fileName (str): names of files to clean (no extensions).
+        file_name (str): names of files to clean (no extensions).
         ls (list of str): list of file names (with extensions) to sort.
         comp (bool): which files to look for:
             True: files generated during compilation.
@@ -41,33 +40,33 @@ def garbageFiles(fileName, ls, comp=True):
 
     if comp:
         # Looking for .aux, .dvi, .fls, and .log files
-        nameRegex = re.compile(r"^({})(\.)((aux)|(dvi)|(fls)|(log))$".format(fileName))
+        name_regex = re.compile(r"^({})(\.)((aux)|(dvi)|(fls)|(log))$".format(file_name))
     else:
-        # Looking for fileName.pdf and fileName-crop.pdf
-        nameRegex = re.compile(r"^({})(-crop)?(\.pdf)$".format(fileName))
+        # Looking for file_name.pdf and file_name-crop.pdf
+        name_regex = re.compile(r"^({})(-crop)?(\.pdf)$".format(file_name))
 
     # Collect the garbage
     i = 0
     while i < len(ls):
-        mo = nameRegex.match(ls[i])
+        mo = name_regex.match(ls[i])
         if mo:
             garbage.append(mo.group())
         i += 1
     return garbage
 
-def cleanUp(fileName, verbose=True, comp=True):
+def clean_up(file_name, verbose=True, comp=True):
     """Cleans directory of certain file types given their name.
 
     Args:
-        fileName (str): names of files to remove (no extensions).
+        file_name (str): names of files to remove (no extensions).
         verbose (bool): determines verbosity.
         comp (bool): which files to delete:
             True: files generated during compilation.
             False: pdf files and their crops.
     """
     # Find out what's garbage
-    ls = texDirContents()
-    garbage = garbageFiles(fileName, ls, comp)
+    ls = tex_dir_contents()
+    garbage = garbage_files(file_name, ls, comp)
 
     # Delete it
     for f in garbage:
@@ -77,26 +76,26 @@ def cleanUp(fileName, verbose=True, comp=True):
     if verbose:
         print()
 
-def generatePDF(fileName, clean=True, verbose=True):
+def generate_PDF(file_name, clean=True, verbose=True):
     """Generates a pdf using pdflatex.
 
     Args:
-        fileName (str): name for the .tex and .pdf files (no extensions).
+        file_name (str): name for the .tex and .pdf files (no extensions).
         clean (bool): whether to remove non-pdf files after compiling:
             True: remove non-pdf files.
             False: keep non-pdf files.
         verbose (bool): determines verbosity.
     Raises:
-        FileNotFoundError: if fileName does not correspond to an existing file.
+        FileNotFoundError: if file_name does not correspond to an existing file.
         Exception: if the compilation otherwise fails when running pdflatex.
     """
     # Navigate to texDir
-    os.chdir(os.path.abspath(fileIO.dirExists()))
+    os.chdir(os.path.abspath(file_IO.dir_exists()))
 
     # Use pdflatex
-    argsList = ["pdflatex", fileName+".tex"]
+    args_list = ["pdflatex", file_name+".tex"]
     try:
-        comp = subprocess.run(argsList, stdout=subprocess.PIPE,
+        comp = subprocess.run(args_list, stdout=subprocess.PIPE,
             universal_newlines=True)
     except FileNotFoundError:
         print("File could not be found.")
@@ -110,41 +109,41 @@ def generatePDF(fileName, clean=True, verbose=True):
 
     # Clean directory
     if clean:
-        cleanUp(fileName, verbose, comp=True)
+        clean_up(file_name, verbose, comp=True)
 
-def generatePNG(fileName, cleanLogs=True, cleanPDFs=True, verbose=True):
+def generatePNG(file_name, clean_logs=True, clean_pdfs=True, verbose=True):
     """Generates a png given a pdf using pdfcrop and pnmtopng.
 
     Args:
-        fileName (str): name for the .pdf and .png files (no extensions).
+        file_name (str): name for the .pdf and .png files (no extensions).
         clean (bool): whether to remove pdf files and their crops after compiling:
             True: remove pdf files and their crops.
             False: keep pdf files and their crops.
         verbose (bool): determines verbosity.
     """
     # Compile to pdf
-    if cleanLogs:
-        generatePDF(fileName, clean=True, verbose=verbose)
+    if clean_logs:
+        generate_PDF(file_name, clean=True, verbose=verbose)
     else:
-        generatePDF(fileName, clean=False, verbose=verbose)
+        generate_PDF(file_name, clean=False, verbose=verbose)
 
     # Crop the pdf
-    argsList = ["pdfcrop", fileName+".pdf"]
+    args_list = ["pdfcrop", file_name+".pdf"]
     if verbose:
-        argsList.append("--verbose")
-    crop = subprocess.run(argsList)
+        args_list.append("--verbose")
+    crop = subprocess.run(args_list)
     
     # Convert to png
-    argsList = ["pdftoppm", "-png", fileName+"-crop.pdf", fileName]
-    img = subprocess.run(argsList)
+    args_list = ["pdftoppm", "-png", file_name+"-crop.pdf", file_name]
+    img = subprocess.run(args_list)
     
-    # Change name from fileName-1.png to fileName.png
-    argsList = ["mv", fileName+"-1.png", fileName+".png"]
-    rename = subprocess.run(argsList)
+    # Change name from file_name-1.png to file_name.png
+    args_list = ["mv", file_name+"-1.png", file_name+".png"]
+    rename = subprocess.run(args_list)
     if verbose:
-        print(fileName+".png created.")
+        print(file_name+".png created.")
         print()
 
     # Clean directory
-    if cleanPDFs:
-        cleanUp(fileName, verbose, comp=False)
+    if clean_pdfs:
+        clean_up(file_name, verbose, comp=False)

@@ -2,7 +2,7 @@ import argparse
 import textwrap
 
 import compile_convert
-import fileIO
+import file_IO
 import gui_stuff
 from _version import __version__
 
@@ -58,10 +58,10 @@ def main():
         VERBOSE = True
 
     # Confirm file_name is valid
-    file_name = fileIO.valid_file_name(args.file_name)
+    file_name = file_IO.valid_file_name(args.file_name)
     
     # Is file new or existing?
-    if fileIO.file_exists(file_name):
+    if file_IO.file_exists(file_name):
         # Edit existing file
         gui_stuff.init_win(file_name, VERBOSE, new=False)
     else:

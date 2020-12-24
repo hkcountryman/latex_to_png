@@ -3,7 +3,7 @@ from tkinter import ttk
 import tkinter.simpledialog
 
 import compile_convert
-import fileIO
+import file_IO
 
 class text_scroll_combo(ttk.Frame):
     """A ttk.Frame with a scroll bar.
@@ -102,7 +102,7 @@ def save(txt_obj, file_name, verbose, new=True):
     # Make the file
     if new:
         file_name = file_name + ".tex"
-    my_path = fileIO.dirExists()/file_name
+    my_path = file_IO.dir_exists()/file_name
     my_file = open(my_path, "w")
     my_file.write(text)
     my_file.close()
@@ -110,7 +110,7 @@ def save(txt_obj, file_name, verbose, new=True):
     if verbose == True:
         print(file_name+".tex saved.")
 
-def makePNG(win, txt_obj, file_name, verbose, new=True):
+def make_PNG(win, txt_obj, file_name, verbose, new=True):
     """Save the contents of the text box and generate a PNG.
 
     Args:
@@ -155,8 +155,8 @@ def init_win(file_name, verbose, new=True):
     # Is the file existing?
     if not new:
         with_extension = file_name + ".tex"
-        my_path = fileIO.dirExists()/with_extension
-        combo.txt.insert(INSERT, fileIO.readFile(my_path))
+        my_path = file_IO.dir_exists()/with_extension
+        combo.txt.insert(INSERT, file_IO.read_file(my_path))
 
     # Buttons panel
     buttons = ttk.Frame(win)
@@ -167,7 +167,7 @@ def init_win(file_name, verbose, new=True):
     s.pack(in_=buttons, side=LEFT, padx=10)
     # Generate PNG button
     p = ttk.Button(win, text="Save and generate PNG",
-        command=lambda:makePNG(win, combo.txt, file_name, verbose, new))
+        command=lambda:make_PNG(win, combo.txt, file_name, verbose, new))
     p.pack(in_=buttons, side=RIGHT, padx=10)
 
     # Make it all appear
