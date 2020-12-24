@@ -24,6 +24,7 @@ check_for_dir() {
 	fi
 }
 
+# Confirm Python is 3.5+
 python_ver_check() {
 	echo checking for the correct version of Python . . .
 	if ! python3 --version 2>&1 | grep -E "^(Python 3\.)(([5-9])|([1-9])([0-9]))"
