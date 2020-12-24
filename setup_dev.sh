@@ -29,7 +29,7 @@ python_ver_check() {
 	echo checking for the correct version of Python . . .
 	if ! python3 --version 2>&1 | grep -E "^(Python 3\.)(([5-9])|([1-9])([0-9]))"
 	then	
-		echo Make sure you are using Python version 3.5+	
+		echo Make sure the venv is using Python version 3.5+	
 		exit
 	fi
 }
@@ -40,9 +40,9 @@ check_pip_packages() {
 	pip install -r ./requirements.txt 
 }
 
-#check_for_dir
+check_for_dir
 python_ver_check
-#check_pip_packages
+check_pip_packages
 
 PACKAGES=(
     python3-tk			# tkinter
@@ -51,8 +51,3 @@ PACKAGES=(
 	texlive-latex-extra
 	texlive-extra-utils
 )
-
-for item in ${PACKAGES[*]}
-do
-	sudo apt install $item -y
-done
