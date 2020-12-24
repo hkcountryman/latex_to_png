@@ -48,7 +48,7 @@ def main():
         )
     parser.add_argument(
         "file_name",
-        help="name of the file to create or edit (no extension)"
+        help="name of the file to create or edit (.tex or no extension)"
         )
     args = parser.parse_args()
 

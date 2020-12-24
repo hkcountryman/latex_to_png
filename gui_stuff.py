@@ -45,7 +45,7 @@ class PNG_dialog(tkinter.simpledialog.Dialog):
             True: delete PDFs and their crops.
             False: keep PDFs and their crops.
     """
-    # Initialize static variables to default values; may change later
+    # Initialize static variables to default values
     f = ""
     VERBOSE = False
     clean_logs = True
