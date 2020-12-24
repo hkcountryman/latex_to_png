@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+#from pdf2image import convert_from_path
 import re
 import subprocess
 
@@ -89,9 +90,6 @@ def generate_PDF(file_name, clean=True, verbose=True):
         FileNotFoundError: if file_name does not correspond to an existing file.
         Exception: if the compilation otherwise fails when running pdflatex.
     """
-    # Navigate to texDir
-    os.chdir(os.path.abspath(file_IO.dir_exists()))
-
     # Use pdflatex
     args_list = ["pdflatex", file_name+".tex"]
     try:
@@ -101,7 +99,7 @@ def generate_PDF(file_name, clean=True, verbose=True):
         print("File could not be found.")
         quit()
     except:
-        print("Compilation failed.")
+        print(" Compilation failed.")
         quit()
     else:
         if verbose:
@@ -121,6 +119,9 @@ def generatePNG(file_name, clean_logs=True, clean_pdfs=True, verbose=True):
             False: keep pdf files and their crops.
         verbose (bool): determines verbosity.
     """
+    # Navigate to texDir
+    os.chdir(os.path.abspath(file_IO.dir_exists()))
+
     # Compile to pdf
     if clean_logs:
         generate_PDF(file_name, clean=True, verbose=verbose)
@@ -133,6 +134,10 @@ def generatePNG(file_name, clean_logs=True, clean_pdfs=True, verbose=True):
         args_list.append("--verbose")
     crop = subprocess.run(args_list)
     
+    '''# Convert to png
+    img = convert_from_path(file_name+"-crop.pdf")
+    img.save(file_name+".png", "PNG")'''
+
     # Convert to png
     args_list = ["pdftoppm", "-png", file_name+"-crop.pdf", file_name]
     img = subprocess.run(args_list)

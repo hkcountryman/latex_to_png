@@ -45,5 +45,9 @@ python_ver_check
 check_pip_packages
 
 PACKAGES=(
-    python3-tk	# tkinter, 1324 kB
+    python3-tk	# tkinter, 1.324 MB
+	poppler-utils
+	texlive-latex-base
+	texlive-latex-extra	# basic stuff I need, 452 MB
+	texlive-extra-utils
 )
