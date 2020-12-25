@@ -6,7 +6,7 @@ Right now the program is functional but shitty. You have been warned.
 ## Setup
 Use the setup.sh bash script to install dependencies (the ./setup_dev.sh script is intended only for developers who want to tweak the code in a virtual environment). Navigate to your local latex_to_png directory and use
 ```
-./setup.sh
+sudo ./setup.sh
 ```
 If you prefer, everything can also be installed manually, in which case you'll want the following packages:
   - python3-tk
