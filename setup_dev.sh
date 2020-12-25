@@ -43,11 +43,3 @@ check_pip_packages() {
 check_for_dir
 python_ver_check
 check_pip_packages
-
-PACKAGES=(
-    python3-tk			# tkinter
-	poppler-utils		# pdf -> png
-	texlive-latex-base	# latex things...
-	texlive-latex-extra
-	texlive-extra-utils
-)

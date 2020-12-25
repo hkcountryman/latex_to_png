@@ -6,12 +6,12 @@ import subprocess
 import file_IO
 
 def tex_dir_contents():
-    """Runs ls in the shell to assemble a list of files in texDir.
+    """Runs ls in the shell to assemble a list of files in texdir.
 
     Returns:
-        a list of all file names in texDir.
+        a list of all file names in texdir.
     """
-    # Navigate to texDir
+    # Navigate to texdir
     os.chdir(os.path.abspath(file_IO.dir_exists()))
 
     # Assemble and format ls output in a list
@@ -118,7 +118,7 @@ def generatePNG(file_name, clean_logs=True, clean_pdfs=True, verbose=True):
             False: keep pdf files and their crops.
         verbose (bool): determines verbosity.
     """
-    # Navigate to texDir
+    # Navigate to texdir
     os.chdir(os.path.abspath(file_IO.dir_exists()))
 
     # Compile to pdf
