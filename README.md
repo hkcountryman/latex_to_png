@@ -50,5 +50,6 @@ In the next release, my hope is to add the following:
   - PNGs will have transparent backgrounds
   - The program will force all that aforementioned formatting stuff so you don't have to remember how to begin a LaTeX document, etc.
   - Add some way to clean up the texdir directory of specific file types
+  - Let user specify a preferred location for the directory
   
 At some point I hope to make everything work without leaving the terminal window, but we'll see.
