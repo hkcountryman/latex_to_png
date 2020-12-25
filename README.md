@@ -6,7 +6,7 @@ Right now the program is functional but shitty. You have been warned.
 ## Setup
 Use the setup.sh bash script to install dependencies (the ./setup_dev.sh script is intended only for developers who want to tweak the code in a virtual environment). Navigate to your local latex_to_png directory and use
 ```
-./setup.sh
+sudo ./setup.sh
 ```
 If you prefer, everything can also be installed manually, in which case you'll want the following packages:
   - python3-tk
@@ -50,5 +50,6 @@ In the next release, my hope is to add the following:
   - PNGs will have transparent backgrounds
   - The program will force all that aforementioned formatting stuff so you don't have to remember how to begin a LaTeX document, etc.
   - Add some way to clean up the texdir directory of specific file types
+  - Let user specify a preferred location for the directory
   
 At some point I hope to make everything work without leaving the terminal window, but we'll see.
