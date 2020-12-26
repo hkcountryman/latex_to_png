@@ -22,5 +22,5 @@ PACKAGES=(
 
 for item in ${PACKAGES[*]}
 do
-	sudo apt install $item -y
+	apt install $item -y
 done
