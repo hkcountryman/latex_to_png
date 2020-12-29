@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+import tkinter.messagebox
 import tkinter.simpledialog
 
 import compile_convert
@@ -169,6 +170,14 @@ def init_win(file_name, verbose, new=True):
     p = ttk.Button(win, text="Save and generate PNG",
         command=lambda:make_PNG(win, combo.txt, file_name, verbose, new))
     p.pack(in_=buttons, side=RIGHT, padx=10)
+
+    # To close the window
+    def on_exit():
+        """Called when the X button is clicked to close the text editor."""
+        if tkinter.messagebox.askyesno("Exit", "Save?"):
+            save(combo.txt, file_name, verbose, new)
+        win.destroy()
+    win.protocol("WM_DELETE_WINDOW", on_exit)
 
     # Make it all appear
     win.mainloop()
