@@ -16,7 +16,7 @@ sudo apt install [package name here]
 ```
 Now you can run the program from the directory it is in. A good place to start would be the help message:
 ```
-./latex_to_png -h
+./ltxpng.py -h
 ```
 
 ## Instructions
