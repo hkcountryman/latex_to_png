@@ -6,9 +6,6 @@ import subprocess
 
 import file_IO
 
-################################################################################
-#transparency = False
-
 def tex_dir_contents():
     """Runs ls in the shell to assemble a list of files in texdir.
 
@@ -74,7 +71,7 @@ def clean_up(file_name, verbose=True, comp=True):
 
     # Delete it
     for f in garbage:
-        rm = subprocess.run(["rm", f])
+        subprocess.run(["rm", f])
         if verbose:
             print("Deleting "+f)
     if verbose:
@@ -153,15 +150,15 @@ def generatePNG(file_name, transparency, clean_logs=True, clean_pdfs=True, verbo
     args_list = ["pdfcrop", file_name+".pdf"]
     if verbose:
         args_list.append("--verbose")
-    crop = subprocess.run(args_list)
+    subprocess.run(args_list)
 
     # Convert to png
     args_list = ["pdftoppm", "-png", file_name+"-crop.pdf", file_name]
-    img = subprocess.run(args_list)
+    subprocess.run(args_list)
     
     # Change name from file_name-1.png to file_name.png
     args_list = ["mv", file_name+"-1.png", file_name+".png"]
-    rename = subprocess.run(args_list)
+    subprocess.run(args_list)
     if verbose:
         print(file_name+".png created.")
         print()

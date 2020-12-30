@@ -51,7 +51,7 @@ class PNG_dialog(tkinter.simpledialog.Dialog):
     VERBOSE = False
     clean_logs = True
     clean_PDFs = True
-    transparency = False
+    transparency = True
 
     def __init__(self, *args, **kwargs):
         """Instantiates with same arguments the superclass constructor accepts."""
@@ -63,29 +63,23 @@ class PNG_dialog(tkinter.simpledialog.Dialog):
         Args:
             win (tkinter.Tk object): the window from which the dialog originates.
         """
-################################################################################
         # Whether to keep log files
-        self.logs = Checkbutton(win, text="Keep log files", command=lambda:clean(logs=True))
+        self.logs = Checkbutton(win, text="Keep log files",
+            command=lambda:clean(logs=True))
         self.logs.deselect()
         self.logs.grid(row=1, columnspan=2, sticky=W)
 
-################################################################################
         # Whether to keep PDF files
-        self.PDFs = Checkbutton(win, text="Keep PDF files", command=lambda:clean(logs=False))
+        self.PDFs = Checkbutton(win, text="Keep PDF files",
+            command=lambda:clean(logs=False))
         self.PDFs.deselect()
         self.PDFs.grid(row=2, columnspan=2, sticky=W)
 
-        # Transparency checkbox
-        self.transparency = BooleanVar()
-        self.t = Checkbutton(win, text="Transparent", command=lambda:transparent())
-        self.t.deselect()
-        self.t.grid(row=3, columnspan=2, sticky=W)
-
     def apply(self):
         """Saves and generates a PNG when OK is pressed."""
-        compile_convert.generatePNG(self.f, self.transparency, self.clean_logs, self.clean_PDFs, self.VERBOSE)
+        compile_convert.generatePNG(self.f, self.transparency, self.clean_logs,
+            self.clean_PDFs, self.VERBOSE)
 
-################################################################################
 def clean(logs=True):
     """Setter method for PNG_dialog.clean_logs, .clean_PDFs.
     Args:
@@ -145,7 +139,7 @@ def make_PNG(win, packages_box, math_box, file_name, verbose, new=True):
     PNG_dialog.f = file_name
     PNG_dialog.VERBOSE = verbose
     save(packages_box, math_box, file_name, new)
-    d = PNG_dialog(win, title="Create a PNG")
+    PNG_dialog(win, title="Create a PNG")
 
 def init_win(file_name, verbose, new=True):
     """Create a window to edit a file.
@@ -207,22 +201,41 @@ def init_win(file_name, verbose, new=True):
         packages.txt.insert(INSERT, file_IO.read_file(my_path, packages=True))
         math.txt.insert(INSERT, file_IO.read_file(my_path, packages=False))
 
-    # Buttons panel with transparency checkbox
+    # Buttons panel
     buttons = ttk.Frame(win)
     buttons.pack(side=BOTTOM, pady=25)
+
     # Save button
     s = ttk.Button(win, text="Save",
         command=lambda:save(packages.txt, math.txt, file_name, verbose, new))
     s.pack(in_=buttons, side=LEFT, padx=10)
+
     # Generate PNG button
-    p = ttk.Button(win, text="Save and generate PNG",
-        command=lambda:make_PNG(win, packages.txt, math.txt, file_name, verbose, new))
+    p = ttk.Button(win, text="Save and generate PNG", command=lambda:make_PNG(win,
+        packages.txt, math.txt, file_name, verbose, new))
     p.pack(in_=buttons, side=LEFT, padx=10)
-################################################################################
-    '''# Transparency checkbox
-    t = Checkbutton(win, text="Transparent", command=lambda:transparency())
-    #t.select()
-    t.pack(in_=buttons, side=LEFT)'''
+
+    # Command for transparency
+    transparent = IntVar()
+    def trans_sel():
+        # Transparent PNG
+        if transparent.get() == 1:
+            PNG_dialog.transparency = True
+        # White background
+        else:
+            PNG_dialog.transparency = False
+
+    # Transparency radio button panel
+    trans_panel = ttk.Frame(win)
+    trans_panel.pack(side=TOP)
+    r1 = Radiobutton(win, text="Transparent", variable=transparent, value=1,
+        command=trans_sel)
+    r1.select()
+    r1.pack(in_=trans_panel, anchor=W)
+    r2 = Radiobutton(win, text="White background", variable=transparent, value=2,
+        command=trans_sel)
+    r2.pack(in_=trans_panel, anchor=W)
+    trans_panel.pack(in_=buttons, side=LEFT)
 
     # To close the window
     def on_exit():
@@ -239,9 +252,3 @@ def init_win(file_name, verbose, new=True):
 
     # Make it all appear
     win.mainloop()
-
-################################################################################
-def transparent():
-    """Setter method for transparency of PNG"""
-    transparency = not transparency
-    #compile_convert.transparency = not compile_convert.transparency
