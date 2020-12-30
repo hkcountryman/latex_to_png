@@ -75,7 +75,7 @@ def read_file(file_path, packages=True):
         start = "% Import packages:\n"
         end = "\\begin{document}\n"
     else:
-        start = "\\begin{document}\n"
+        start = "% Enter math mode as desired:\n"
         end = "\\end{document}"
     contents = ""
     with open(file_path, "r") as f:
