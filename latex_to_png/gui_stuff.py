@@ -62,18 +62,23 @@ class PNG_dialog(tkinter.simpledialog.Dialog):
         Args:
             win (tkinter.Tk object): the window from which the dialog originates.
         """
+################################################################################
         # Whether to keep log files
         self.logs = Checkbutton(win, text="Keep log files", command=lambda:clean(logs=True))
+        self.logs.deselect()
         self.logs.grid(row=1, columnspan=2, sticky=W)
 
+################################################################################
         # Whether to keep PDF files
         self.PDFs = Checkbutton(win, text="Keep PDF files", command=lambda:clean(logs=False))
+        self.PDFs.deselect()
         self.PDFs.grid(row=2, columnspan=2, sticky=W)
 
     def apply(self):
         """Saves and generates a PNG when OK is pressed."""
         compile_convert.generatePNG(self.f, self.clean_logs, self.clean_PDFs, self.VERBOSE)
 
+################################################################################
 def clean(logs=True):
     """Setter method for PNG_dialog.clean_logs, .clean_PDFs.
     Args:
@@ -195,7 +200,7 @@ def init_win(file_name, verbose, new=True):
         packages.txt.insert(INSERT, file_IO.read_file(my_path, packages=True))
         math.txt.insert(INSERT, file_IO.read_file(my_path, packages=False))
 
-    # Buttons panel
+    # Buttons panel with transparency checkbox
     buttons = ttk.Frame(win)
     buttons.pack(side=BOTTOM, pady=25)
     # Save button
@@ -205,7 +210,12 @@ def init_win(file_name, verbose, new=True):
     # Generate PNG button
     p = ttk.Button(win, text="Save and generate PNG",
         command=lambda:make_PNG(win, packages.txt, math.txt, file_name, verbose, new))
-    p.pack(in_=buttons, side=RIGHT, padx=10)
+    p.pack(in_=buttons, side=LEFT, padx=10)
+################################################################################
+    # Transparency checkbox
+    t = Checkbutton(win, text="Transparent", command=lambda:transparency())
+    t.select()
+    t.pack(in_=buttons, side=LEFT)
 
     # To close the window
     def on_exit():
@@ -222,3 +232,8 @@ def init_win(file_name, verbose, new=True):
 
     # Make it all appear
     win.mainloop()
+
+################################################################################
+def transparency():
+    """Setter method for transparency of PNG"""
+    compile_convert.transparent = not compile_convert.transparent
