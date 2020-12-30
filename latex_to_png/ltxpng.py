@@ -29,25 +29,25 @@ def flags():
             """))
     parser.add_argument(
         "file_name",
-        help="file name to create, edit, or clean (.tex or no extension)"
+        help="file name to create, edit, or clean (no extension)"
     )
     parser.add_argument(
         "-c", "--clean",
         action="store_true",
         default=False,
-        help="clean texdir of PDF, .aux, .dvi, .fls, and .log files"
+        help="clean texdir of PDF, .aux, .dvi, .fls, and .log files of specified name"
     )
     parser.add_argument(
         "-cl", "--clean-logs",
         action="store_true",
         default=False,
-        help="clean texdir of .aux, .dvi, .fls, and .log files"
+        help="clean texdir of .aux, .dvi, .fls, and .log files of specified name"
     )
     parser.add_argument(
         "-cp", "--clean-pdfs",
         action="store_true",
         default=False,
-        help="clean texdir of PDF files and their crops"
+        help="clean texdir of PDF files and their crops of specified name"
     )
     parser.add_argument(
         "-v", "--version",
