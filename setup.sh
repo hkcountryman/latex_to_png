@@ -28,5 +28,5 @@ done
 
 # Create symbolic link to run program
 cp -r latex_to_png /usr/local
-cd usr/local/bin
+cd /usr/local/bin
 ln -s ../latex_to_png/ltxpng.py ltxpng
