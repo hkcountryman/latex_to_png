@@ -5,8 +5,9 @@ import compile_convert
 
 # Formatting string constants
 class_style = ("\\documentclass{article}\n" + "\\thispagestyle{empty}\n" +
-    "% Import packages:\n")
-begin_doc = "\n\\begin{document}\n" + "% Enter math mode as desired:\n"
+    "\\usepackage{relsize}\n" + "% Import packages:\n")
+begin_doc = ("\n\\begin{document}\n" + "\\relscale{4}\n" +
+    "% Enter math mode as desired:\n")
 end_doc = "\n\\end{document}"
 
 def valid_file_name(file_name):
