@@ -29,7 +29,7 @@ def flags():
             """))
     parser.add_argument(
         "file_name",
-        help="name of the file to create or edit (.tex or no extension)"
+        help="file name to create, edit, or clean (.tex or no extension)"
     )
     parser.add_argument(
         "-c", "--clean",
