@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import argparse
+import os
+import subprocess
 import textwrap
 
 import compile_convert
@@ -21,6 +23,40 @@ def main():
             new packages to install to extend the functionality of this tool, try
                 apt search texlive | grep -v "installed"
             """))
+    parser.add_argument(
+        "file_name",
+        help="name of the file to create or edit (.tex or no extension)"
+    )
+    parser.add_argument(
+        "-c", "--clean",
+        action="store_true",
+        default=False,
+        help="clean texdir of PDF, .aux, .dvi, .fls, and .log files"
+    )
+    parser.add_argument(
+        "-cl", "--clean-logs",
+        action="store_true",
+        default=False,
+        help="clean texdir of .aux, .dvi, .fls, and .log files"
+    )
+    parser.add_argument(
+        "-cp", "--clean-pdfs",
+        action="store_true",
+        default=False,
+        help="clean texdir of PDF files and their crops"
+    )
+    parser.add_argument(
+        "-v", "--version",
+        action="version",
+        version="%(prog)s {version}".format(version=__version__),
+        help="show program version number"
+    )
+    parser.add_argument(
+        "-vb", "--verbose",
+        action="store_true",
+        default=False,
+        help="increase output verbosity in the shell"
+    )
     # Implement later
     '''parser.add_argument(
         "-ng", "--no-gui",
@@ -37,21 +73,6 @@ def main():
         action="store_true", default=False,
         help="keep pdf files created by compilation"
         )'''
-    parser.add_argument(
-        "-v", "--version",
-        action="version",
-        version="%(prog)s {version}".format(version=__version__),
-        help="show program version number"
-        )
-    parser.add_argument(
-        "-vb", "--verbose",
-        action="store_true", default=False,
-        help="increase output verbosity in the shell"
-        )
-    parser.add_argument(
-        "file_name",
-        help="name of the file to create or edit (.tex or no extension)"
-        )
     args = parser.parse_args()
 
     # Will we be using --verbose?
@@ -61,6 +82,24 @@ def main():
 
     # Confirm file_name is valid
     file_name = file_IO.valid_file_name(args.file_name)
+
+    # Clean up?
+    # Navigate to texdir
+    os.chdir(os.path.abspath(file_IO.dir_exists()))
+    # What to delete
+    args_list = ["rm", "-f"]
+    logs_list = [".aux", ".dvi", ".fls", ".log"]
+    pdf_list = [".pdf", "-crop.pdf"]
+    if args.clean or args.clean_logs:
+        for extension in logs_list:
+            args_list.append(file_name+extension)
+    if args.clean or args.clean_pdfs:
+        for extension in pdf_list:
+            args_list.append(file_name+extension)
+    # Delete unwanted files
+    if args.clean or args.clean_logs or args.clean_pdfs:
+        subprocess.run(args_list, stdout=subprocess.PIPE)
+        return
     
     # Is file new or existing?
     if file_IO.file_exists(file_name):
