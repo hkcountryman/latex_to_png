@@ -14,12 +14,15 @@ Naturally, install them with
 ```
 sudo apt install [package name here]
 ```
-Now you can run the program.
+Now you can run the program from the directory it is in. A good place to start would be the help message:
+```
+./latex_to_png -h
+```
 
 ## Instructions
 Once you've followed the setup instructions, you can run it from the command line. It has some optional flags as well as one positional argument: a file name (alphanumeric characters and underscores, no extension). It can either be a new file or the name of an existing file you wish to edit. A window will pop up where you can type LaTeX commands, entering math mode however you like. This will save a .tex file. If you ever edit this file through any means but the program's GUI, it is inadvisable to touch anything but the math you entered yourself when you created the file. At best, you might cause the PNG to be formatted incorrectly. At worst you could make the file unreadable by the program. Be careful unless you fully understand the LaTeX.
 
-Before you generate a PNG, decide whether you want a transparent or a white background and select the appropriate radio buttons at the bottom of the window. Beside them, there are buttons to save the .tex file as well as to save it and generate a PNG from it. If you select the latter, you will be given the option to keep log files and PDF files. If you ever want to delete those files, there are flags to clean them from the directory (see --help).
+Before you generate a PNG, decide whether you want a transparent or a white background and select the appropriate radio button at the bottom of the window. Beside that, there are buttons to save the .tex file as well as to save it and generate a PNG from it. If you select the latter, you will be given the option to keep log files and PDF files. If you ever want to delete those files, there are flags to clean them from the directory (see --help).
 
 ## Plans for the future
 In the next release, my hope is to add the following:
