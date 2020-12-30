@@ -6,6 +6,7 @@ import subprocess
 
 import file_IO
 
+################################################################################
 transparent = True
 
 def tex_dir_contents():
