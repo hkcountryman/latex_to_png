@@ -10,8 +10,12 @@ import file_IO
 import gui_stuff
 from _version import __version__
 
-def main():
-    # Create flags
+def flags():
+    """Creates flags and positional arguments to call.
+
+    Returns:
+        argparse.Namespace object.
+    """
     parser = argparse.ArgumentParser(
         prog="LaTeX PNG Creator Beta",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -74,40 +78,63 @@ def main():
         help="keep pdf files created by compilation"
         )'''
     args = parser.parse_args()
+    return args
 
-    # Will we be using --verbose?
-    VERBOSE = False
-    if args.verbose:
-        VERBOSE = True
+def clean_up(args):
+    """Tests whether we are calling the program to clean the directory.
 
-    # Confirm file_name is valid
-    file_name = file_IO.valid_file_name(args.file_name)
-
-    # Clean up?
+    Args:
+        args (argparse.Namespace object): where we check flag and argument values.
+    Returns:
+        True: if the clean-up flags were used.
+    """
     # Navigate to texdir
     os.chdir(os.path.abspath(file_IO.dir_exists()))
+
     # What to delete
     args_list = ["rm", "-f"]
     logs_list = [".aux", ".dvi", ".fls", ".log"]
     pdf_list = [".pdf", "-crop.pdf"]
     if args.clean or args.clean_logs:
         for extension in logs_list:
-            args_list.append(file_name+extension)
+            args_list.append(args.file_name+extension)
     if args.clean or args.clean_pdfs:
         for extension in pdf_list:
-            args_list.append(file_name+extension)
+            args_list.append(args.file_name+extension)
+
     # Delete unwanted files
     if args.clean or args.clean_logs or args.clean_pdfs:
         subprocess.run(args_list, stdout=subprocess.PIPE)
-        return
-    
+        return True
+    return False
+
+def open_win(args):
+    """Launches a window to edit a new or existing file.
+
+    Args:
+        args (argparse.Namespace object): where we check flag and argument values.
+    """
     # Is file new or existing?
-    if file_IO.file_exists(file_name):
+    if file_IO.file_exists(args.file_name):
         # Edit existing file
-        gui_stuff.init_win(file_name, VERBOSE, new=False)
+        gui_stuff.init_win(args.file_name, args.verbose, new=False)
     else:
         # Create new file
-        gui_stuff.init_win(file_name, VERBOSE, new=True)
+        gui_stuff.init_win(args.file_name, args.verbose, new=True)
+
+def main():
+    # Create flags
+    args = flags()
+
+    # Confirm file_name is valid
+    file_IO.valid_file_name(args.file_name)
+
+    # Clean up?
+    if clean_up(args):
+        return
+    
+    # Create window
+    open_win(args)
 
 if __name__ == "__main__":
     main()
