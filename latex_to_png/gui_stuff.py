@@ -51,6 +51,7 @@ class PNG_dialog(tkinter.simpledialog.Dialog):
     VERBOSE = False
     clean_logs = True
     clean_PDFs = True
+    transparency = False
 
     def __init__(self, *args, **kwargs):
         """Instantiates with same arguments the superclass constructor accepts."""
@@ -74,9 +75,15 @@ class PNG_dialog(tkinter.simpledialog.Dialog):
         self.PDFs.deselect()
         self.PDFs.grid(row=2, columnspan=2, sticky=W)
 
+        # Transparency checkbox
+        self.transparency = BooleanVar()
+        self.t = Checkbutton(win, text="Transparent", command=lambda:transparent())
+        self.t.deselect()
+        self.t.grid(row=3, columnspan=2, sticky=W)
+
     def apply(self):
         """Saves and generates a PNG when OK is pressed."""
-        compile_convert.generatePNG(self.f, self.clean_logs, self.clean_PDFs, self.VERBOSE)
+        compile_convert.generatePNG(self.f, self.transparency, self.clean_logs, self.clean_PDFs, self.VERBOSE)
 
 ################################################################################
 def clean(logs=True):
@@ -212,10 +219,10 @@ def init_win(file_name, verbose, new=True):
         command=lambda:make_PNG(win, packages.txt, math.txt, file_name, verbose, new))
     p.pack(in_=buttons, side=LEFT, padx=10)
 ################################################################################
-    # Transparency checkbox
+    '''# Transparency checkbox
     t = Checkbutton(win, text="Transparent", command=lambda:transparency())
     #t.select()
-    t.pack(in_=buttons, side=LEFT)
+    t.pack(in_=buttons, side=LEFT)'''
 
     # To close the window
     def on_exit():
@@ -234,6 +241,7 @@ def init_win(file_name, verbose, new=True):
     win.mainloop()
 
 ################################################################################
-def transparency():
+def transparent():
     """Setter method for transparency of PNG"""
-    compile_convert.transparency = not compile_convert.transparency
+    transparency = not transparency
+    #compile_convert.transparency = not compile_convert.transparency

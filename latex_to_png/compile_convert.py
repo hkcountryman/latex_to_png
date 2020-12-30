@@ -7,7 +7,7 @@ import subprocess
 import file_IO
 
 ################################################################################
-transparency = False
+#transparency = False
 
 def tex_dir_contents():
     """Runs ls in the shell to assemble a list of files in texdir.
@@ -130,7 +130,7 @@ def transparent(file_name):
     img.putdata(output_data)
     img.save(file_name+".png", "PNG")
     
-def generatePNG(file_name, clean_logs=True, clean_pdfs=True, verbose=True):
+def generatePNG(file_name, transparency, clean_logs=True, clean_pdfs=True, verbose=True):
     """Generates a png given a pdf using pdfcrop and pnmtopng.
 
     Args:
