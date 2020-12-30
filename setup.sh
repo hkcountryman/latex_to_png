@@ -12,6 +12,7 @@ python_ver_check() {
 
 python_ver_check
 
+# Install requisite packages
 PACKAGES=(
     python3-tk			# tkinter
 	poppler-utils		# pdf -> png
@@ -24,3 +25,8 @@ for item in ${PACKAGES[*]}
 do
 	apt install $item -y
 done
+
+# Create symbolic link to run program
+cp -r latex_to_png /usr/local
+cd usr/local/bin
+ln -s ../latex_to_png/ltxpng.py ltxpng
