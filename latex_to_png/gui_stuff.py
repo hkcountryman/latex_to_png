@@ -7,7 +7,7 @@ import compile_convert
 import file_IO
 
 class text_scroll_combo(ttk.Frame):
-    """A ttk.Frame with a scroll bar.
+    """A custom ttk.Frame with a scroll bar.
 
     Attributes:
         txt (tkinter.Text object): text box to hold user input.
@@ -86,11 +86,12 @@ def clean(logs=True):
     else:
         PNG_dialog.clean_PDFs = False
 
-def save(txt_obj, file_name, verbose, new=True):
+def save(packages_box, math_box, file_name, verbose, new=True):
     """Save the contents of the text box.
 
     Args:
-        txt_obj (tkinter.Text object): the text box in question.
+        packages_box (tkinter.Text object): text box containing packages.
+        math_box (tkinter.Text object): text box containing math.
         file_name (str): the name to save it under (no extension).
         verbose (bool): determines verbosity.
         new (bool): whether file_name.tex is new or existing:
@@ -98,25 +99,31 @@ def save(txt_obj, file_name, verbose, new=True):
             False: file exists and is being edited.
     """
     # Gather the text
-    text = txt_obj.get("1.0", "end-1c")
+    packages = packages_box.get("1.0", "end-1c")
+    math = math_box.get("1.0", "end-1c")
 
     # Make the file
     if new:
         file_name = file_name + ".tex"
     my_path = file_IO.dir_exists()/file_name
     my_file = open(my_path, "w")
-    my_file.write(text)
+    my_file.write(file_IO.class_style)
+    my_file.write(packages)
+    my_file.write(file_IO.begin_doc)
+    my_file.write(math)
+    my_file.write(file_IO.end_doc)
     my_file.close()
 
     if verbose == True:
         print(file_name+".tex saved.")
 
-def make_PNG(win, txt_obj, file_name, verbose, new=True):
+def make_PNG(win, packages_box, math_box, file_name, verbose, new=True):
     """Save the contents of the text box and generate a PNG.
 
     Args:
         win (tkinter.Tk object): the window that spawns a dialog.
-        txt_obj (tkinter.Text object): the text box in question.
+        packages_box (tkinter.Text object): text box containing packages.
+        math_box (tkinter.Text object): text box containing math.
         file_name (str): the name to save it under (no extension).
         verbose (bool): determines verbosity.
         new (bool): whether file_name.tex is new or existing:
@@ -125,7 +132,7 @@ def make_PNG(win, txt_obj, file_name, verbose, new=True):
     """
     PNG_dialog.f = file_name
     PNG_dialog.VERBOSE = verbose
-    save(txt_obj, file_name, new)
+    save(packages_box, math_box, file_name, new)
     d = PNG_dialog(win, title="Create a PNG")
 
 def init_win(file_name, verbose, new=True):
@@ -142,12 +149,40 @@ def init_win(file_name, verbose, new=True):
     win = Tk()
     win.title("LaTeX Thing!")
 
-    # Add scrolling text box
-    combo = text_scroll_combo(win)
-    combo.pack(fill="both", expand=True)
-    combo.config(width=600, height=600)
-    combo.txt.config(font=("consolas", 12), undo=True, wrap='word')
-    combo.txt.config(borderwidth=3, relief="sunken")
+    # Document class and page style panel
+    format_frame_1 = LabelFrame(win)
+    format_frame_1.pack(fill="both", expand="yes")
+    format_label_1 = Label(format_frame_1, text=file_IO.class_style, anchor="w",
+        justify=LEFT)
+    format_label_1.pack(fill="both")
+
+    # Packages text box
+    packages = text_scroll_combo(win)
+    packages.pack(fill="both", expand=True)
+    packages.config(width=600, height=100)
+    packages.txt.config(font=("consolas", 12), undo=True, wrap='word')
+    packages.txt.config(borderwidth=3, relief="sunken")
+
+    # Begin document
+    format_frame_2 = LabelFrame(win)
+    format_frame_2.pack(fill="both", expand="yes")
+    format_label_2 = Label(format_frame_2, text=file_IO.begin_doc, anchor="w",
+        justify=LEFT)
+    format_label_2.pack(fill="both")
+
+    # Math text box
+    math = text_scroll_combo(win)
+    math.pack(fill="both", expand=True)
+    math.config(width=600, height=400)
+    math.txt.config(font=("consolas", 12), undo=True, wrap='word')
+    math.txt.config(borderwidth=3, relief="sunken")
+
+    # End document
+    format_frame_3 = LabelFrame(win)
+    format_frame_3.pack(fill="both", expand="yes")
+    format_label_3 = Label(format_frame_3, text=file_IO.end_doc, anchor="w",
+        justify=LEFT)
+    format_label_3.pack(fill="both")
     
     # Style options
     style = ttk.Style()
@@ -157,26 +192,32 @@ def init_win(file_name, verbose, new=True):
     if not new:
         with_extension = file_name + ".tex"
         my_path = file_IO.dir_exists()/with_extension
-        combo.txt.insert(INSERT, file_IO.read_file(my_path))
+        packages.txt.insert(INSERT, file_IO.read_file(my_path, packages=True))
+        math.txt.insert(INSERT, file_IO.read_file(my_path, packages=False))
 
     # Buttons panel
     buttons = ttk.Frame(win)
     buttons.pack(side=BOTTOM, pady=25)
     # Save button
     s = ttk.Button(win, text="Save",
-        command=lambda:save(combo.txt, file_name, verbose, new))
+        command=lambda:save(packages.txt, math.txt, file_name, verbose, new))
     s.pack(in_=buttons, side=LEFT, padx=10)
     # Generate PNG button
     p = ttk.Button(win, text="Save and generate PNG",
-        command=lambda:make_PNG(win, combo.txt, file_name, verbose, new))
+        command=lambda:make_PNG(win, packages.txt, math.txt, file_name, verbose, new))
     p.pack(in_=buttons, side=RIGHT, padx=10)
 
     # To close the window
     def on_exit():
         """Called when the X button is clicked to close the text editor."""
-        if tkinter.messagebox.askyesno("Exit", "Save?"):
-            save(combo.txt, file_name, verbose, new)
-        win.destroy()
+        save_dialog = tkinter.messagebox.askyesnocancel("Exit", "Save?")
+        if save_dialog == True:
+            save(packages.txt, math.txt, file_name, verbose, new)
+            win.destroy()
+        elif save_dialog == False:
+            win.destroy()
+        else:
+            return
     win.protocol("WM_DELETE_WINDOW", on_exit)
 
     # Make it all appear

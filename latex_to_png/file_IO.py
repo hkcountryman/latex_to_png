@@ -3,6 +3,12 @@ import re
 
 import compile_convert
 
+# Formatting string constants
+class_style = ("\\documentclass{article}\n" + "\\thispagestyle{empty}\n" +
+    "% Import packages:\n")
+begin_doc = "\n\\begin{document}\n" + "% Enter math mode as desired:\n"
+end_doc = "\n\\end{document}"
+
 def valid_file_name(file_name):
     """Confirms that a file name is valid.
 
@@ -54,17 +60,28 @@ def file_exists(file_name):
         # File exists so it appears in ls
         return True
 
-def read_file(file_path):
+def read_file(file_path, packages=True):
     """Parse existing file to locate past user input.
 
     Args:
         file_path (pathlib.PosixPath object): .tex file and its full path.
+        packages (bool): what part of the file we're reading:
+            True: reading packages
+            False: reading math
     Returns:
         str of the text in the file.
     """
+    if packages:
+        start = "% Import packages:\n"
+        end = "\\begin{document}\n"
+    else:
+        start = "\\begin{document}\n"
+        end = "\\end{document}"
     contents = ""
     with open(file_path, "r") as f:
         lines = f.readlines()
-        for line in lines:
+        begin_idx = lines.index(start) + 1
+        end_idx = lines.index(end)
+        for line in lines[begin_idx:end_idx]:
             contents += line
     return contents
