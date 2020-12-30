@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from PIL import Image
 import re
 import subprocess
 
@@ -108,6 +109,24 @@ def generate_PDF(file_name, clean=True, verbose=True):
     if clean:
         clean_up(file_name, verbose, comp=True)
 
+def transparent(file_name):
+    # Navigate to texdir
+    os.chdir(os.path.abspath(file_IO.dir_exists()))
+
+    img = Image.open(file_name+".png")
+    img = img.convert("RGBA")
+    input_data = img.getdata()
+
+    output_data = []
+    for datum in input_data:
+        if datum[0] == datum[1] == datum[2] == 255:
+            output_data.append((255, 255, 255, 0))
+        else:
+            output_data.append(datum)
+
+    img.putdata(output_data)
+    img.save(file_name+".png", "PNG")
+    
 def generatePNG(file_name, clean_logs=True, clean_pdfs=True, verbose=True):
     """Generates a png given a pdf using pdfcrop and pnmtopng.
 
@@ -143,6 +162,9 @@ def generatePNG(file_name, clean_logs=True, clean_pdfs=True, verbose=True):
     if verbose:
         print(file_name+".png created.")
         print()
+
+    # Make transparent
+    transparent(file_name)
 
     # Clean directory
     if clean_pdfs:
