@@ -66,8 +66,8 @@ def read_file(file_path, packages=True):
     Args:
         file_path (pathlib.PosixPath object): .tex file and its full path.
         packages (bool): what part of the file we're reading:
-            True: reading packages
-            False: reading math
+            True: reading packages.
+            False: reading math.
     Returns:
         str of the text in the file.
     """

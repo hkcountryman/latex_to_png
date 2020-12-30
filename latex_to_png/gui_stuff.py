@@ -45,6 +45,9 @@ class PNG_dialog(tkinter.simpledialog.Dialog):
         clean_PDFs (bool): whether to clean PDF files and their crops:
             True: delete PDFs and their crops.
             False: keep PDFs and their crops.
+        transparency (bool): corresponds with state of radio buttons:
+            True: "Transparent" button is pressed.
+            False: "White background" button is pressed.
     """
     # Initialize static variables to default values
     f = ""
@@ -218,6 +221,7 @@ def init_win(file_name, verbose, new=True):
     # Command for transparency
     transparent = IntVar()
     def trans_sel():
+        """When activated by radio button, changes PNG_dialog.transparency."""
         # Transparent PNG
         if transparent.get() == 1:
             PNG_dialog.transparency = True

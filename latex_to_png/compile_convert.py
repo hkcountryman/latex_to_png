@@ -110,6 +110,11 @@ def generate_PDF(file_name, clean=True, verbose=True):
         clean_up(file_name, verbose, comp=True)
 
 def transparent(file_name):
+    """Changes white pixels to transparent pixels.
+
+    Args:
+        file_name (str): PNG to modify.
+    """
     # Navigate to texdir
     os.chdir(os.path.abspath(file_IO.dir_exists()))
 
@@ -117,13 +122,13 @@ def transparent(file_name):
     img = img.convert("RGBA")
     input_data = img.getdata()
 
+    # Change white to transparent
     output_data = []
     for datum in input_data:
         if datum[0] == datum[1] == datum[2] == 255:
             output_data.append((255, 255, 255, 0))
         else:
             output_data.append(datum)
-
     img.putdata(output_data)
     img.save(file_name+".png", "PNG")
     
@@ -132,9 +137,11 @@ def generatePNG(file_name, transparency, clean_logs=True, clean_pdfs=True, verbo
 
     Args:
         file_name (str): name for the .pdf and .png files (no extensions).
-        clean (bool): whether to remove pdf files and their crops after compiling:
-            True: remove pdf files and their crops.
-            False: keep pdf files and their crops.
+        transparency (bool): whether to give PNG a transparent background.
+            True: transparent background.
+            False: white background.
+        clean_logs (bool): whether to remove files generated during compilation.
+        clean_pdfs (bool): whether to remove pdf files and their crops after compiling.
         verbose (bool): determines verbosity.
     """
     # Navigate to texdir
