@@ -214,7 +214,7 @@ def init_win(file_name, verbose, new=True):
 ################################################################################
     # Transparency checkbox
     t = Checkbutton(win, text="Transparent", command=lambda:transparency())
-    t.select()
+    #t.select()
     t.pack(in_=buttons, side=LEFT)
 
     # To close the window
@@ -236,4 +236,4 @@ def init_win(file_name, verbose, new=True):
 ################################################################################
 def transparency():
     """Setter method for transparency of PNG"""
-    compile_convert.transparent = not compile_convert.transparent
+    compile_convert.transparency = not compile_convert.transparency
