@@ -13,21 +13,21 @@ def valid_file_name(file_name):
     """Confirms that a file name is valid.
 
     Args:
-        file_name (str): potential name for .tex file (extension optional).
+        file_name (str): potential name for equation's related files (no extension).
     Returns:
-        a str of alphanumeric/underscore characters (without extension).
+        a str of alphanumeric/underscore characters.
     Raises:
         Exception: if the file name is invalid.
     """
-    # Must have 1+ alphanumeric/underscore characters; may end in .tex
-    name_regex = re.compile(r"^(\w+)(\.tex)?$")
+    # Must have 1+ alphanumeric/underscore characters
+    name_regex = re.compile(r"^(\w+)$")
     mo = name_regex.search(file_name)
 
-    # Return file name (without .tex extension) or raise exception
+    # Return file name or raise exception
     if mo:
-        return mo.group(1)
+        return mo.group()
     else:
-        raise Exception("Invalid file name. Be sure the extension is .tex.")
+        raise Exception("Invalid file name.")
 
 def dir_exists():
     """Confirm the program directory exists or create it.
