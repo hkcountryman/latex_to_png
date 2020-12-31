@@ -7,13 +7,11 @@ You must be running a Debian-based Linux distribution and you must have Python 3
 ## First-time setup
 The setup_dev.sh script is intended only for developers who want to tweak the code in a virtual environment.
 
-Use the setup.sh bash script to install dependencies and to create a symbolic link to the executable in /usr/local/bin. This will copy the child latex_to_png directory, which contains the related modules, into /usr/local. After that, it is safe to delete the entire cloned directory if desired.
-
-Navigate to the parent latex_to_png directory, wherever you cloned it, and type
+Before using the program, you must run the setup.sh bash script. Navigate to the parent latex_to_png directory that you cloned and type
 ```
 sudo ./setup.sh
 ```
- You will now be able to call the program from anywhere. A good place to start would be the help message:
+This installs dependencies via apt, creates a symbolic link to the executable in /usr/local/bin, and copies the child latex_to_png directory, which contains the related modules, into /usr/local. Afterwards, it is safe to delete the entire cloned directory if desired. You will now be able to call the program from anywhere. A good place to start would be the help message:
 ```
 ltxpng -h
 ```
