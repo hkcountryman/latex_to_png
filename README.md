@@ -1,3 +1,4 @@
+![header](../assets/header_blue.png?raw=true)
 # ltxpng Beta
 This program lets you generate PNGs from LaTeX commands, which are saved as .tex files should you wish to edit your PNG. All created files can be found in ~/Documents/texdir.
 
