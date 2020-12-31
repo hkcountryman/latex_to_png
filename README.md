@@ -37,6 +37,5 @@ If you ever edit your generated .tex files through any means but the program's G
 
 ## Plans for the future
 In the next release, my hope is to add the following:
-  - An option to use the program without ever leaving the CLI
   - Let user specify a preferred location for the directory
   - Hopefully, remove the limitation where a user can lose part of their equation by exceeding the space of a single page
