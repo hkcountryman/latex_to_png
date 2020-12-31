@@ -59,7 +59,7 @@ def flags():
         "-p", "--png",
         action="store_true",
         default=False,
-        help="convert to png"
+        help="convert a .tex file to a PNG without launching the GUI text editor"
     )
     parser.add_argument(
         "-v", "--version",
@@ -110,7 +110,7 @@ def no_gui(args):
     Args:
         args (argparse.Namespace object): where we check flag and argument values.
     Returns:
-        True: if the no-gui flag was used.
+        True: if the --no-gui flag was used.
     """
     # We will be using the GUI
     if not args.no_gui:
