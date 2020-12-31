@@ -14,8 +14,8 @@ python_ver_check
 
 # Install requisite packages
 PACKAGES=(
-	python3-tk			# tkinter
-	poppler-utils		# pdf -> png
+	python3-tk	# tkinter
+	poppler-utils	# pdf -> png
 	texlive-latex-base	# latex things...
 	texlive-latex-extra
 	texlive-extra-utils
