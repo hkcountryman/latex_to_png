@@ -160,7 +160,9 @@ def generatePNG(file_name, transparency, clean_logs=True, clean_pdfs=True, verbo
     subprocess.run(args_list)
 
     # Convert to png
-    args_list = ["pdftoppm", "-png", file_name+"-crop.pdf", file_name]
+    resolution = "500"
+    args_list = ["pdftoppm", "-png", "-r", resolution, file_name+"-crop.pdf",
+        file_name]
     subprocess.run(args_list)
     
     # Change name from file_name-1.png to file_name.png
