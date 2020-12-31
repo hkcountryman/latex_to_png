@@ -1,15 +1,14 @@
 #!/bin/bash
 
-# Confirm Python is 3.5+
+# Confirm Python is 3.6+
 python_ver_check() {
 	echo checking for the correct version of Python . . .
-	if ! python3 --version 2>&1 | grep -E "^(Python 3\.)(([5-9])|([1-9])([0-9]))"
+	if ! python3 --version 2>&1 | grep -E "^(Python 3\.)(([6-9])|([1-9])([0-9]))"
 	then	
-		echo Make sure you are using Python version 3.5+	
+		echo Make sure you are using Python version 3.6+	
 		exit
 	fi
 }
-
 python_ver_check
 
 # Install requisite packages
@@ -20,7 +19,6 @@ PACKAGES=(
 	texlive-latex-extra
 	texlive-extra-utils
 )
-
 for item in ${PACKAGES[*]}
 do
 	apt install $item -y

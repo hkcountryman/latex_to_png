@@ -2,6 +2,7 @@ from pathlib import Path
 import re
 
 import compile_convert
+from file_path import texdir
 
 # Formatting string constants
 class_style = ("\\documentclass{article}\n" + "\\thispagestyle{empty}\n" +
@@ -36,7 +37,7 @@ def dir_exists():
     Returns:
         pathlib.PosixPath object (equiv. to str) representing program directory.
     """
-    my_path = Path.home()/"Documents"/"texdir"
+    my_path = Path(texdir)
     if not my_path.exists():
         my_path.mkdir()
     return my_path
@@ -65,7 +66,7 @@ def read_file(file_path, packages=True):
     """Parse existing file to locate past user input.
 
     Args:
-        file_path (pathlib.PosixPath object): .tex file and its full path.
+        file_path (str): .tex file and its full path.
         packages (bool): what part of the file we're reading:
             True: reading packages.
             False: reading math.
