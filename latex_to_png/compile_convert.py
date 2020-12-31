@@ -122,10 +122,20 @@ def transparent(file_name):
     img = img.convert("RGBA")
     input_data = img.getdata()
 
-    # Change white to transparent
-    output_data = []
+    # Change white to transparent--this left grey pixels around black edges
+    '''output_data = []
     for datum in input_data:
         if datum[0] == datum[1] == datum[2] == 255:
+            output_data.append((255, 255, 255, 0))
+        else:
+            output_data.append(datum)
+    img.putdata(output_data)
+    img.save(file_name+".png", "PNG")'''
+
+    # Change non-black to transparent--this will mean only greyscale can be transparent
+    output_data = []
+    for datum in input_data:
+        if not (datum[0] == datum[1] == datum[2] == 0):
             output_data.append((255, 255, 255, 0))
         else:
             output_data.append(datum)
@@ -160,7 +170,7 @@ def generatePNG(file_name, transparency, clean_logs=True, clean_pdfs=True, verbo
     subprocess.run(args_list)
 
     # Convert to png
-    resolution = "500"
+    resolution = "5000"
     args_list = ["pdftoppm", "-png", "-r", resolution, file_name+"-crop.pdf",
         file_name]
     subprocess.run(args_list)
