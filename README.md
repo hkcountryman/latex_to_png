@@ -35,7 +35,7 @@ Before you generate a PNG from your math, decide whether you want a transparent 
 
 ![new_img](../assets/new_img.png?raw=true)
 
-If you ever edit your generated .tex files through any means but the program's GUI, it is inadvisable to touch anything but the math you entered yourself. At best, you might cause the PNG to be formatted incorrectly. At worst you could make the file unreadable by the program. Be careful unless you fully understand the LaTeX.
+If you ever edit your generated .tex files through any means but the program's GUI, it is inadvisable to touch anything but the math you entered yourself. At best, you might cause the PNG to be formatted incorrectly. At worst you could make the file unreadable by the program. Be careful unless you [fully understand the LaTeX](https://github.com/hkcountryman/latex_to_png/wiki/Formatting-a-LaTeX-document-to-convert-to-PNG).
 
 ## Plans for the future
 In the next release, my hope is to add the following:
