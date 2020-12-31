@@ -56,6 +56,12 @@ def flags():
         help="create a .tex file without launching the GUI text editor"
     )
     parser.add_argument(
+        "-p", "--png",
+        action="store_true",
+        default=False,
+        help="convert to png"
+    )
+    parser.add_argument(
         "-v", "--version",
         action="version",
         version="%(prog)s {version}".format(version=__version__),
@@ -67,17 +73,6 @@ def flags():
         default=False,
         help="increase output verbosity in the shell"
     )
-    # Implement later
-    '''parser.add_argument(
-        "-l", "--logs",
-        action="store_true", default=False,
-        help="keep non-pdf/png files created during compilation"
-        )
-    parser.add_argument(
-        "-p", "--pdfs",
-        action="store_true", default=False,
-        help="keep pdf files created by compilation"
-        )'''
     args = parser.parse_args()
     return args
 
@@ -117,6 +112,7 @@ def no_gui(args):
     Returns:
         True: if the no-gui flag was used.
     """
+    # We will be using the GUI
     if not args.no_gui:
         return False
 
@@ -141,6 +137,33 @@ def no_gui(args):
     else:
         print("A file of that name exists. Open it in your text editor of choice.")
     
+    return True
+
+def convert(args):
+    """Tests whether we will be converting to PNG and does so if needed.
+
+    Args:
+        args (argparse.Namespace object): where we check flag and argument values.
+    """
+    # We will not be converting to PNG
+    if not args.png:
+        return False
+
+    # Ask if PNG is transparent
+    print("Make PNG transparent? (Y/N)")
+    background = input().lower()
+    while background != "y" and background != "n":
+        background = input().lower()
+    if background == "y":
+        transparency = True
+    else:
+        transparency = False
+
+    # Generate PNG
+    verbose = args.verbose
+    compile_convert.generatePNG(args.file_name, transparency, clean_logs=False,
+        clean_pdfs=False, verbose=verbose)
+
     return True
 
 def open_win(args):
@@ -170,6 +193,10 @@ def main():
     
     # No GUI?
     if no_gui(args):
+        return
+
+    # Are we converting to PNG?
+    if convert(args):
         return
     
     # Create window
