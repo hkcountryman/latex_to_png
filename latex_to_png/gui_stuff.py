@@ -151,7 +151,7 @@ def init_win(file_name, verbose, new=True):
     """
     # Make a window
     win = Tk()
-    win.title("LaTeX Thing!")
+    win.title("ltxpng")
 
     # Document class and page style panel
     format_frame_1 = LabelFrame(win)
