@@ -17,7 +17,7 @@ def flags():
         argparse.Namespace object.
     """
     parser = argparse.ArgumentParser(
-        prog="LaTeX PNG Creator Beta",
+        prog="ltxpng",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=textwrap.dedent("""\
             A WIP tool to convert LaTeX equations to PNGs.
