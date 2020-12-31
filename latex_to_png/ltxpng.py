@@ -50,6 +50,12 @@ def flags():
         help="clean texdir of PDF files and their crops of specified name"
     )
     parser.add_argument(
+        "-ng", "--no-gui",
+        action="store_true",
+        default=False,
+        help="create a .tex file without launching the GUI text editor"
+    )
+    parser.add_argument(
         "-v", "--version",
         action="version",
         version="%(prog)s {version}".format(version=__version__),
@@ -63,11 +69,6 @@ def flags():
     )
     # Implement later
     '''parser.add_argument(
-        "-ng", "--no-gui",
-        action="store_true", default=False,
-        help="use the program without launching the GUI text editor"
-        )
-    parser.add_argument(
         "-l", "--logs",
         action="store_true", default=False,
         help="keep non-pdf/png files created during compilation"
@@ -108,6 +109,40 @@ def clean_up(args):
         return True
     return False
 
+def no_gui(args):
+    """Tests whether we will forego the GUI and simply create a .tex file.
+
+    Args:
+        args (argparse.Namespace object): where we check flag and argument values.
+    Returns:
+        True: if the no-gui flag was used.
+    """
+    if not args.no_gui:
+        return False
+
+    # Navigate to texdir
+    os.chdir(os.path.abspath(file_IO.dir_exists()))
+
+    # Check if file exists
+    exists = file_IO.file_exists(args.file_name)
+
+    file_name = args.file_name + ".tex"
+    my_path = file_IO.dir_exists()/file_name
+    my_file = open(my_path, "w")
+
+    # New file:
+    if not exists:
+        my_file.write(file_IO.class_style+"\n")
+        my_file.write(file_IO.begin_doc+"\n")
+        my_file.write(file_IO.end_doc)
+        my_file.close()
+        print(file_name+" has been created. Open it in your text editor of choice.")
+    # Existing file
+    else:
+        print("A file of that name exists. Open it in your text editor of choice.")
+    
+    return True
+
 def open_win(args):
     """Launches a window to edit a new or existing file.
 
@@ -131,6 +166,10 @@ def main():
 
     # Clean up?
     if clean_up(args):
+        return
+    
+    # No GUI?
+    if no_gui(args):
         return
     
     # Create window
