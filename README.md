@@ -12,7 +12,7 @@ Before using the program, you must run the setup.sh bash script. Navigate to the
 ```
 sudo ./setup.sh
 ```
-This installs dependencies via apt, creates a symbolic link to the executable in /usr/local/bin, and copies the child latex_to_png directory, which contains the related modules, into /usr/local. Afterwards, it is safe to delete the entire cloned directory if desired. You will now be able to call the program from anywhere. A good place to start would be the help message:
+This installs dependencies via apt, creates a python module containing a directory location of your choice in which to save all created files, creates a symbolic link to the executable in /usr/local/bin, and copies the child latex_to_png directory, which contains the related modules, into /usr/local. Afterwards, it is safe to delete the entire cloned directory if desired. You will now be able to call the program from anywhere. A good place to start would be the help message:
 ```
 ltxpng -h
 ```
@@ -36,7 +36,5 @@ Before you generate a PNG from your math, decide whether you want a transparent 
 
 If you ever edit your generated .tex files through any means but the program's GUI, it is inadvisable to touch anything but the math you entered yourself. At best, you might cause the PNG to be formatted incorrectly. At worst you could make the file unreadable by the program. Be careful unless you [fully understand the LaTeX](https://github.com/hkcountryman/latex_to_png/wiki/Formatting-a-LaTeX-document-to-convert-to-PNG).
 
-## Plans for the future
-In the next release, my hope is to add the following:
-  - Let user specify a preferred location for the directory
-  - Unfortunately, right now transparent images MUST be black and white because any pixels that are not black will be made transparent. This is because of [anti-aliasing](https://en.wikipedia.org/wiki/Spatial_anti-aliasing) on the PNGs prior to removing the background: in addition to white pixels in the background, pixels that are almost white but a little grey surround the black text. When the white pixels are replaced by transparent pixels, these grey pixels are missed, resulting in an apparent "white" outline around the text that is very visible on dark backgrounds. The easiest way to fix this was to only leave the black pixels intact, but I will experiment with ways to mitigate the harsh outline without restricting available colors.
+## Limitations
+Unfortunately, right now transparent images MUST be black and white because any pixels that are not black will be made transparent. This is because of [anti-aliasing](https://en.wikipedia.org/wiki/Spatial_anti-aliasing) on the PNGs prior to removing the background: in addition to white pixels in the background, pixels that are almost white but a little grey surround the black text. When the white pixels are replaced by transparent pixels, these grey pixels are missed, resulting in an apparent "white" outline around the text that is very visible on dark backgrounds. The easiest way to fix this was to only leave the black pixels intact, but I will experiment with ways to mitigate the harsh outline without restricting available colors.
