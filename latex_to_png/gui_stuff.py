@@ -111,8 +111,7 @@ def save(packages_box, math_box, file_name, new=True):
     math = math_box.get("1.0", "end-1c")
 
     # Make the file
-    if new:
-        file_name = file_name + ".tex"
+    file_name = file_name + ".tex"
     my_path = file_IO.dir_exists()/file_name
     my_file = open(my_path, "w")
     my_file.write(file_IO.class_style)
@@ -242,7 +241,7 @@ def init_win(file_name, verbose, new=True):
         """Called when the X button is clicked to close the text editor."""
         save_dialog = tkinter.messagebox.askyesnocancel("Exit", "Save?")
         if save_dialog == True:
-            save(packages.txt, math.txt, file_name, verbose, new)
+            save(packages.txt, math.txt, file_name, new)
             win.destroy()
         elif save_dialog == False:
             win.destroy()
