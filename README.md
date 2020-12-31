@@ -25,7 +25,7 @@ sudo apt install [package name here]
 ```
 
 ## Instructions
-Once you've followed the setup instructions, you can run ltxpng from the command line. It has some optional flags as well as one positional argument: a file name (alphanumeric characters and underscores, no extension). It can either be a new file or the name of an existing file. A window will pop up where you can type LaTeX commands, entering math mode however you like.
+Once you've followed the setup instructions, you can run ltxpng from the command line. It has some optional flags as well as one positional argument: a file name (alphanumeric characters and underscores, no extension). It can either be a new file or the name of an existing file. Provided you did not use the optional --no-gui flag, a window will pop up where you can type LaTeX commands, entering math mode however you like.
 
 ![new_tex](../assets/new_tex.png?raw=true)
 
