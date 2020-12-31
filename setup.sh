@@ -26,6 +26,21 @@ do
 	apt install $item -y
 done
 
+# Ask for directory location
+echo Where would you like to install the directory that will contain the files you produce with this program?
+# Check if it's a directory
+filepath=
+while true ; do
+	read -r -p "Path: " filepath
+	if [ -d "$filepath" ] ; then
+		break
+	fi
+	echo "$filepath is not a directory."
+done
+# Save location for texdir inside child latex_to_png directory
+echo -n "texdir = \"$filepath/texdir\"" > ./latex_to_png/file_path.py
+echo "You can find the directory at $filepath/texdir."
+
 # Create symbolic link to run program
 cp -r latex_to_png /usr/local
 cd /usr/local/bin

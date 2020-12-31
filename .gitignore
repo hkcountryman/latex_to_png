@@ -127,3 +127,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+latex_to_png/file_path.py
