@@ -5,9 +5,10 @@ import compile_convert
 
 # Formatting string constants
 class_style = ("\\documentclass{article}\n" + "\\thispagestyle{empty}\n" +
-    "% Import packages:\n")
-begin_doc = "\n\\begin{document}\n" + "% Enter math mode as desired:\n"
-end_doc = "\n\\end{document}\n"
+    "\\usepackage[active, tightpage]{preview}\n" + "% Import packages:\n")
+begin_doc = ("\n\\begin{document}\n" + "\\begin{preview}\n" +
+    "% Enter math mode as desired:\n")
+end_doc = "\n\\end{preview}\n" + "\\end{document}\n"
 
 def valid_file_name(file_name):
     """Confirms that a file name is valid.
@@ -76,7 +77,7 @@ def read_file(file_path, packages=True):
         end = "\\begin{document}\n"
     else:
         start = "% Enter math mode as desired:\n"
-        end = "\\end{document}\n"
+        end = "\\end{preview}\n"
     contents = ""
     with open(file_path, "r") as f:
         lines = f.readlines()
