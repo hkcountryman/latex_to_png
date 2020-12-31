@@ -27,9 +27,15 @@ sudo apt install [package name here]
 ```
 
 ## Instructions
-Once you've followed the setup instructions, you can run ltxpng from the command line. It has some optional flags as well as one positional argument: a file name (alphanumeric characters and underscores, no extension). It can either be a new file or the name of an existing file. A window will pop up where you can type LaTeX commands, entering math mode however you like. This will save a .tex file. If you ever edit this file through any means but the program's GUI, it is inadvisable to touch anything but the math you entered yourself when you created the file. At best, you might cause the PNG to be formatted incorrectly. At worst you could make the file unreadable by the program. Be careful unless you fully understand the LaTeX.
+Once you've followed the setup instructions, you can run ltxpng from the command line. It has some optional flags as well as one positional argument: a file name (alphanumeric characters and underscores, no extension). It can either be a new file or the name of an existing file. A window will pop up where you can type LaTeX commands, entering math mode however you like.
 
-Before you generate a PNG, decide whether you want a transparent or a white background and select the appropriate radio button at the bottom of the window. Beside that, there are buttons to save the .tex file as well as to save it and generate a PNG from it. If you select the latter, you will be given the option to keep log files and PDF files. If you ever want to delete those files, there are optional flags to clean them from the directory.
+![new_tex](../assets/new_tex.png?raw=true)
+
+Before you generate a PNG from your math, decide whether you want a transparent or a white background and select the appropriate radio button at the bottom of the window. Beside that, there are buttons to save the .tex file as well as to save it and generate a PNG from it. If you select the former, a .tex file will be saved in texdir. If you select the latter, the .tex file will be saved along with its PNG. You will also be given the option to save log files and PDF files. If you ever want to delete those extraneous files, there are optional flags to clean them from the directory.
+
+![new_img](../assets/new_img.png?raw=true)
+
+If you ever edit your generated .tex files through any means but the program's GUI, it is inadvisable to touch anything but the math you entered yourself. At best, you might cause the PNG to be formatted incorrectly. At worst you could make the file unreadable by the program. Be careful unless you fully understand the LaTeX.
 
 ## Plans for the future
 In the next release, my hope is to add the following:
