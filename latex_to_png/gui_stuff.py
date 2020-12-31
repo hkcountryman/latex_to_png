@@ -95,14 +95,13 @@ def clean(logs=True):
     else:
         PNG_dialog.clean_PDFs = False
 
-def save(packages_box, math_box, file_name, verbose, new=True):
+def save(packages_box, math_box, file_name, new=True):
     """Save the contents of the text box.
 
     Args:
         packages_box (tkinter.Text object): text box containing packages.
         math_box (tkinter.Text object): text box containing math.
         file_name (str): the name to save it under (no extension).
-        verbose (bool): determines verbosity.
         new (bool): whether file_name.tex is new or existing:
             True: file is new.
             False: file exists and is being edited.
@@ -122,9 +121,6 @@ def save(packages_box, math_box, file_name, verbose, new=True):
     my_file.write(math)
     my_file.write(file_IO.end_doc)
     my_file.close()
-
-    if verbose == True:
-        print(file_name+".tex saved.")
 
 def make_PNG(win, packages_box, math_box, file_name, verbose, new=True):
     """Save the contents of the text box and generate a PNG.
@@ -210,7 +206,7 @@ def init_win(file_name, verbose, new=True):
 
     # Save button
     s = ttk.Button(win, text="Save",
-        command=lambda:save(packages.txt, math.txt, file_name, verbose, new))
+        command=lambda:save(packages.txt, math.txt, file_name, new))
     s.pack(in_=buttons, side=LEFT, padx=10)
 
     # Generate PNG button

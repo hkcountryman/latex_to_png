@@ -132,8 +132,8 @@ def no_gui(args):
 
     # New file:
     if not exists:
-        my_file.write(file_IO.class_style+"\n")
-        my_file.write(file_IO.begin_doc+"\n")
+        my_file.write(file_IO.class_style)
+        my_file.write(file_IO.begin_doc)
         my_file.write(file_IO.end_doc)
         my_file.close()
         print(file_name+" has been created. Open it in your text editor of choice.")
