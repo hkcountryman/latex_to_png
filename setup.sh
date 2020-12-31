@@ -37,7 +37,7 @@ while true ; do
 done
 # Save location for texdir inside child latex_to_png directory
 echo -n "texdir = \"$filepath/texdir\"" > ./latex_to_png/file_path.py
-echo "You can find the directory at $filepath/texdir."
+echo "After you first run ltxpng, you will be able to find the directory at $filepath/texdir."
 
 # Create symbolic link to run program
 cp -r latex_to_png /usr/local
