@@ -1,0 +1,49 @@
+So once you run the setup script for the first time, it installs some dependencies and you can tell it where to save the files you create.
+
+I put mine under documents.
+
+Now you can call the program from anywhere in the file system and safely delete the cloned repository.
+
+So let's try the help flag.
+
+And we can just run it with a file name if we want to make a new file with the GUI...
+
+And test. You can do verbose if you want; I'm not gonna bother.
+
+GUI pops up. You can import packages here.
+
+For example, if you wanna use amsmath...
+
+And then, if you look at the bottom you can choose if you want a transparent background or a white background, whichever one.
+
+You can save it, just save the tex file, or you can save the tex file and generate the PNG.
+
+So let's do a transparent background, generate a PNG. It gives you the option to keep the various files that are generated during compilation.
+
+Uh, let's just skip that. Say ok.
+
+And if you look in your texdir directory, you should have your file.
+
+You can also, uh, re-open an existing file for editing. It'll open the same file. Maybe you want a white background.
+
+And there it is with a white background.
+
+Let's try without using the GUI. You just use the N G flag, or no GUI.
+
+Now it tells us that test2 dot T E X has been created. It's in texdir.
+
+So let's just go over there.
+
+And open test2 dot tex.
+
+And now we can just type whatever we want in here. Just be careful you only type where the comments say you can type, so in this packages section, and this math section.
+
+So let's just make a little thing, save that...
+
+And now we can generate a PNG from that. So...
+
+The flag for that is minus P. It asks you if you want the PNG to be transparent. Sure.
+
+And it generates it. And you'll notice it leaves all the various, um, files generated during compilation without asking you. There's easy flags to clean those up.
+
+You can clean the log files if you want, or the PDF files, or all of them with just minus C. And then they're gone.
