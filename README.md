@@ -36,7 +36,7 @@ Before you generate a PNG from your math, decide whether you want a transparent 
 
 If you ever edit your generated .tex files through any means but the program's GUI, it is inadvisable to touch anything but the math you entered yourself. At best, you might cause the PNG to be formatted incorrectly. At worst you could make the file unreadable by the program. Be careful unless you [fully understand the LaTeX](https://github.com/hkcountryman/latex_to_png/wiki/Formatting-a-LaTeX-document-to-convert-to-PNG).
 
-[Check out this demo on the wiki.](https://github.com/hkcountryman/latex_to_png/wiki/v1.0-Demo)
+[Check out this demo.](https://www.youtube.com/watch?v=fsxswfoOzf4&feature=youtu.be)
 
 ## Limitations
 Unfortunately, right now transparent images MUST be black and white because any pixels that are not black will be made transparent. This is because of [anti-aliasing](https://en.wikipedia.org/wiki/Spatial_anti-aliasing) on the PNGs prior to removing the background: in addition to white pixels in the background, pixels that are almost white but a little grey surround the black text. When the white pixels are replaced by transparent pixels, these grey pixels are missed, resulting in an apparent "white" outline around the text that is very visible on dark backgrounds. The easiest way to fix this was to only leave the black pixels intact, but I will experiment with ways to mitigate the harsh outline without restricting available colors.
