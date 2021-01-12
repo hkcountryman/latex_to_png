@@ -1,6 +1,6 @@
 ![header](https://github.com/hkcountryman/latex_to_png/blob/assets/header_blue.png)
 # ltxpng
-This program lets you generate PNGs from LaTeX commands, which are saved as .tex files should you wish to edit your PNG. All created files can be found in ~/Documents/texdir.
+This program lets you generate PNGs from LaTeX commands, which are saved as .tex files should you wish to edit your PNG. All created files can be found in a directory called texdir.
 
 ## Requirements
 You must be running a Debian-based Linux distribution and you must have Python 3.5 or newer.
