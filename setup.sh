@@ -11,7 +11,7 @@ python_ver_check() {
 }
 python_ver_check
 
-# Install requisite packages
+# Install requisite apt packages
 PACKAGES=(
 	python3-tk	# tkinter
 	poppler-utils	# pdf -> png
@@ -23,6 +23,11 @@ for item in ${PACKAGES[*]}
 do
 	apt install $item -y
 done
+
+# Install requisite pip packages
+DIR="$( cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 ; pwd -P )"
+cd $DIR
+pip install -r ./requirements.txt
 
 # Ask for directory location
 echo Where would you like to install the directory that will contain the files you produce with this program?
